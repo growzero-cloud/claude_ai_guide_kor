@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude.ai 완전 정복 — 생초보 가이드 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --bg: #ffffff;
+  --bg2: #f7f8fc;
+  --bg3: #eef0f8;
+  --sidebar-bg: #f0f2fa;
+  --text: #1a1b2e;
+  --text2: #4a5068;
+  --text3: #8892a4;
+  --accent: #6c5ce7;
+  --accent2: #a29bfe;
+  --accent3: #4834d4;
+  --green: #00b894;
+  --yellow: #f9ca24;
+  --red: #e55039;
+  --orange: #f39c12;
+  --border: #e2e6f0;
+  --border2: #d0d5e8;
+  --code-bg: #1e1e2e;
+  --code-text: #cdd6f4;
+  --shadow: 0 2px 8px rgba(108,92,231,0.08);
+  --shadow-md: 0 4px 16px rgba(108,92,231,0.12);
+  --shadow-lg: 0 8px 32px rgba(108,92,231,0.16);
+  --sidebar-w: 288px;
+  --header-h: 62px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --transition: 0.2s ease;
+}
+[data-theme="dark"] {
+  --bg: #0d0d1a;
+  --bg2: #13132a;
+  --bg3: #1a1a35;
+  --sidebar-bg: #101020;
+  --text: #e8eaf6;
+  --text2: #9fa8c0;
+  --text3: #5c6480;
+  --accent: #7c6ff7;
+  --accent2: #b2acff;
+  --accent3: #6c60e8;
+  --border: #1e2040;
+  --border2: #282848;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans KR', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  transition: background var(--transition), color var(--transition);
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent3); text-decoration: underline; }
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg3);
+  color: var(--accent3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+[data-theme="dark"] code { color: var(--accent2); }
+
+/* ===== HEADER ===== */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 20px;
+  z-index: 100;
+  box-shadow: var(--shadow);
+  transition: background var(--transition), border-color var(--transition);
+}
+.header-brand {
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.header-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 14px;
+  flex-shrink: 0;
+}
+.header-title { font-weight: 700; font-size: 17px; color: var(--text); white-space: nowrap; }
+.header-subtitle {
+  font-size: 11px; color: var(--text3);
+  background: var(--bg3); padding: 2px 8px;
+  border-radius: 20px; white-space: nowrap;
+}
+.header-search-wrap {
+  flex: 1; max-width: 380px; margin: 0 auto;
+  position: relative;
+}
+.header-search-wrap svg {
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%); width: 16px; height: 16px;
+  color: var(--text3); pointer-events: none;
+}
+#search-input {
+  width: 100%; padding: 8px 12px 8px 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg2);
+  color: var(--text);
+  font-family: inherit; font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+#search-input:focus { border-color: var(--accent); background: var(--bg); }
+#search-input::placeholder { color: var(--text3); }
+.search-shortcut {
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg3); color: var(--text3);
+  border: 1px solid var(--border);
+  border-radius: 4px; padding: 1px 5px; font-size: 11px;
+}
+.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.progress-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 4px 10px; font-size: 12px;
+  color: var(--text2);
+}
+.progress-chip-bar {
+  width: 60px; height: 4px;
+  background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.progress-chip-fill {
+  height: 100%; background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.btn-icon {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px; background: var(--bg2);
+  color: var(--text2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition); font-size: 16px;
+}
+.btn-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--bg3); }
+
+/* ===== LAYOUT ===== */
+#layout {
+  display: flex;
+  padding-top: var(--header-h);
+  min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  bottom: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform var(--transition), background var(--transition);
+  z-index: 50;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-progress {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-progress-label {
+  font-size: 12px; color: var(--text3); margin-bottom: 6px;
+  display: flex; justify-content: space-between;
+}
+.sidebar-progress-bar {
+  height: 6px; background: var(--border);
+  border-radius: 3px; overflow: hidden;
+}
+.sidebar-progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.nav-group { padding: 8px 0; }
+.nav-group-header {
+  padding: 6px 16px;
+  font-size: 11px; font-weight: 600;
+  color: var(--text3); letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; user-select: none;
+}
+.nav-group-header:hover { color: var(--text2); }
+.nav-group-toggle { font-size: 10px; transition: transform var(--transition); }
+.nav-group.collapsed .nav-group-toggle { transform: rotate(-90deg); }
+.nav-group.collapsed .nav-list { display: none; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background var(--transition);
+  border-left: 3px solid transparent;
+  position: relative;
+}
+.nav-item:hover { background: var(--bg3); }
+.nav-item.active {
+  background: var(--bg3);
+  border-left-color: var(--accent);
+}
+.nav-item.active .nav-item-text { color: var(--accent); font-weight: 600; }
+.nav-check {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--border2);
+  border-radius: 4px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; transition: all var(--transition);
+  cursor: pointer;
+}
+.nav-item.done .nav-check {
+  background: var(--green); border-color: var(--green); color: white;
+}
+.nav-item-num {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  flex-shrink: 0; width: 18px;
+}
+.nav-item-text {
+  font-size: 13px; color: var(--text2);
+  flex: 1; line-height: 1.3;
+}
+.nav-item-time {
+  font-size: 10px; color: var(--text3);
+  background: var(--bg3); padding: 1px 5px; border-radius: 3px;
+  flex-shrink: 0;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+  z-index: 49;
+}
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  padding: 40px 48px 80px;
+  max-width: 900px;
+  transition: margin var(--transition);
+}
+
+/* search no results */
+.no-results {
+  text-align: center; padding: 60px 20px;
+  color: var(--text3); display: none;
+}
+.no-results svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.4; }
+
+/* ===== SECTION ===== */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px; padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+.section-num {
+  font-size: 12px; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  color: white; padding: 4px 10px; border-radius: 6px;
+  flex-shrink: 0;
+}
+.section-title { font-size: 22px; font-weight: 700; flex: 1; }
+.section-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.section-time {
+  font-size: 12px; color: var(--text3);
+  display: flex; align-items: center; gap: 4px;
+}
+.btn-complete {
+  padding: 5px 12px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid var(--border);
+  background: var(--bg2); color: var(--text2);
+  transition: all var(--transition);
+  font-family: inherit;
+}
+.btn-complete:hover { border-color: var(--green); color: var(--green); }
+.btn-complete.done { background: var(--green); border-color: var(--green); color: white; }
+
+/* ===== CONTENT ELEMENTS ===== */
+.content h3 {
+  font-size: 17px; font-weight: 700;
+  margin: 28px 0 12px;
+  color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.content h3::before {
+  content: ''; width: 4px; height: 18px;
+  background: var(--accent); border-radius: 2px; flex-shrink: 0;
+}
+.content p { margin-bottom: 12px; color: var(--text2); }
+.content ul, .content ol {
+  padding-left: 20px; margin-bottom: 12px; color: var(--text2);
+}
+.content li { margin-bottom: 4px; }
+.content strong { color: var(--text); font-weight: 600; }
+
+/* Callout boxes */
+.callout {
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin: 16px 0;
+  display: flex; gap: 12px;
+  border: 1px solid;
+}
+.callout-icon { font-size: 18px; flex-shrink: 0; line-height: 1.5; }
+.callout-body { flex: 1; }
+.callout-body p { margin: 0; font-size: 14px; }
+.callout.tip { background: rgba(108,92,231,0.06); border-color: rgba(108,92,231,0.2); }
+.callout.warning { background: rgba(243,156,18,0.07); border-color: rgba(243,156,18,0.25); }
+.callout.danger { background: rgba(229,80,57,0.06); border-color: rgba(229,80,57,0.2); }
+.callout.success { background: rgba(0,184,148,0.06); border-color: rgba(0,184,148,0.2); }
+
+/* Code block */
+.code-block {
+  background: var(--code-bg);
+  border-radius: var(--radius);
+  margin: 16px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.code-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.code-lang {
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.5); font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.code-copy {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+  border-radius: 4px; padding: 3px 10px; font-size: 11px;
+  cursor: pointer; font-family: inherit;
+  transition: all var(--transition);
+}
+.code-copy:hover { background: rgba(255,255,255,0.2); color: white; }
+.code-copy.copied { background: rgba(0,184,148,0.3); color: #00b894; border-color: #00b894; }
+.code-block pre {
+  padding: 16px;
+  overflow-x: auto;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--code-text);
+}
+.code-block pre .comment { color: #6a7489; }
+.code-block pre .keyword { color: #cba6f7; }
+.code-block pre .string { color: #a6e3a1; }
+.code-block pre .number { color: #fab387; }
+
+/* Table */
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th {
+  background: var(--bg3);
+  padding: 10px 14px;
+  text-align: left; font-weight: 600; font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg2); }
+
+/* FAQ Accordion */
+.faq { margin: 16px 0; }
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 12px 16px;
+  font-weight: 600; font-size: 14px;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  background: var(--bg2);
+  transition: background var(--transition);
+  user-select: none;
+}
+.faq-q:hover { background: var(--bg3); }
+.faq-arrow { transition: transform var(--transition); font-size: 12px; color: var(--text3); }
+.faq-item.open .faq-arrow { transform: rotate(90deg); }
+.faq-a {
+  display: none; padding: 12px 16px;
+  font-size: 14px; color: var(--text2);
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+.faq-item.open .faq-a { display: block; }
+
+/* Badge */
+.badge {
+  display: inline-block; padding: 2px 8px;
+  border-radius: 4px; font-size: 11px; font-weight: 600;
+  vertical-align: middle;
+}
+.badge-pro { background: rgba(108,92,231,0.15); color: var(--accent); }
+.badge-max { background: rgba(0,184,148,0.15); color: var(--green); }
+.badge-dev { background: rgba(243,156,18,0.15); color: var(--orange); }
+.badge-new { background: rgba(229,80,57,0.12); color: var(--red); }
+
+/* highlight for search */
+mark {
+  background: rgba(249,202,36,0.4);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+[data-theme="dark"] mark { background: rgba(249,202,36,0.25); }
+
+/* ===== BACK TO TOP ===== */
+#back-top {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 40px; height: 40px;
+  background: var(--accent);
+  color: white; border: none; border-radius: 10px;
+  cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md);
+  opacity: 0; transform: translateY(8px);
+  transition: all var(--transition);
+  z-index: 99;
+}
+#back-top.visible { opacity: 1; transform: translateY(0); }
+#back-top:hover { background: var(--accent3); transform: translateY(-2px); }
+
+/* ===== SEARCH HIGHLIGHT CLASSES ===== */
+.section.hidden { display: none; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  #sidebar {
+    transform: translateX(-100%);
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-overlay.open { display: block; }
+  #main {
+    margin-left: 0;
+    padding: 24px 20px 60px;
+  }
+  .header-subtitle { display: none; }
+  .progress-chip { display: none; }
+  .section-title { font-size: 18px; }
+}
+@media (max-width: 480px) {
+  .header-search-wrap { max-width: 160px; }
+  .search-shortcut { display: none; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  #header, #sidebar, #back-top { display: none; }
+  #main { margin-left: 0; padding: 0; }
+  .section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-brand">
+    <button class="btn-icon" id="sidebar-toggle" title="사이드바 토글">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <div class="header-logo">CL</div>
+    <span class="header-title">CL101</span>
+    <span class="header-subtitle">Claude.ai 가이드</span>
+  </div>
+
+  <div class="header-search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="search-input" placeholder="섹션·내용 검색..." autocomplete="off">
+    <span class="search-shortcut">⌘K</span>
+  </div>
+
+  <div class="header-actions">
+    <div class="progress-chip">
+      <span id="progress-text">0%</span>
+      <div class="progress-chip-bar"><div class="progress-chip-fill" id="progress-bar-top"></div></div>
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="테마 전환">🌙</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- LAYOUT -->
+<div id="layout">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label">
+        <span>학습 진도</span>
+        <span id="sidebar-progress-count">0 / 22 완료</span>
+      </div>
+      <div class="sidebar-progress-bar">
+        <div class="sidebar-progress-fill" id="progress-bar-side" style="width:0%"></div>
+      </div>
+    </div>
+
+    <nav id="sidebar-nav">
+      <div class="nav-group" id="group-basic">
+        <div class="nav-group-header" data-group="basic">
+          기초 필수 (00–14) <span class="nav-group-toggle">▼</span>
+        </div>
+        <div class="nav-list" id="list-basic">
+          <!-- generated by JS -->
+        </div>
+      </div>
+      <div class="nav-group" id="group-advanced">
+        <div class="nav-group-header" data-group="advanced">
+          고급 확장 (15–21) <span class="nav-group-toggle">▼</span>
+        </div>
+        <div class="nav-list" id="list-advanced">
+          <!-- generated by JS -->
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+    <div class="no-results" id="no-results">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <p>검색 결과가 없습니다.</p>
+    </div>
+
+    <!-- SECTIONS -->
+    <section class="section" id="sec-00">
+      <div class="section-header">
+        <span class="section-num">00</span>
+        <h2 class="section-title">시작 전 5가지 질문</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 5분</span>
+          <button class="btn-complete" data-sec="0">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>Claude.ai를 처음 켜기 전 가장 많이 받는 5가지 질문에 먼저 답합니다.</p>
+        <div class="faq">
+          <div class="faq-item">
+            <div class="faq-q">Claude.ai와 Claude Code는 뭐가 다른가요? <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">Claude.ai는 <strong>브라우저·앱에서 쓰는 채팅형 AI</strong>입니다. 글쓰기, 리서치, 파일 분석, 슬라이드·문서 생성, 대화형 도구 만들기에 강합니다. Claude Code는 <strong>터미널·IDE에서 쓰는 개발용 에이전트</strong>로, 소스코드를 직접 수정하고 명령어를 실행합니다. 이 가이드는 Claude.ai에 집중합니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">ChatGPT랑 비교해서 뭐가 좋나요? <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">긴 문서 분석(최대 1M 토큰까지 가능, Enterprise), 코드 품질, 한국어 자연스러움, <strong>Artifacts</strong>(코드·문서·앱을 실시간으로 만들어 보여줌), <strong>Projects</strong>(맥락 묶음 워크스페이스), <strong>Cowork</strong>(데스크톱 에이전트)가 강점입니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">무료로 어디까지 쓸 수 있나요? <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">Free 플랜으로 텍스트·이미지·코드 생성, 웹 검색, 파일 첨부, Artifacts, Memory(2026년 3월부터 전 사용자 무료)까지 모두 사용 가능합니다. 단 사용량 한도(5시간 롤링 윈도우)가 있고 Sonnet 4.6 위주로 라우팅됩니다. Opus 4.7과 Cowork는 Pro($20/월) 이상이 필요합니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">내 대화가 모델 학습에 쓰이나요? <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">기본적으로 <strong>대화는 학습에 사용되지 않습니다</strong>. 설정에서 명시적으로 동의해야만 학습에 활용됩니다. Team·Enterprise는 정책상 기본 비활성. 민감 정보는 그래도 마스킹·익명화하는 습관을 권장합니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">한국어 잘 되나요? <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">Opus 4.7·Sonnet 4.6 기준 한국어 글쓰기·요약·번역 모두 사실상 네이티브 수준입니다. 코드 주석·기술 문서·문학적 글쓰기까지 자연스럽고, 존대·반말·전문 톤도 지시대로 따릅니다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-01">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">가입 & 첫 로그인</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 5분</span>
+          <button class="btn-complete" data-sec="1">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <h3>웹에서 시작하기</h3>
+        <ol>
+          <li><a href="https://claude.ai" target="_blank">claude.ai</a> 접속</li>
+          <li>이메일 또는 Google 계정으로 로그인</li>
+          <li>인증번호 입력 → 닉네임·직업 설정 → 첫 대화 시작</li>
+        </ol>
+
+        <h3>모바일 앱 (iOS / Android)</h3>
+        <ul>
+          <li>App Store / Play Store에서 <strong>"Claude"</strong> 검색</li>
+          <li>웹과 동일한 계정으로 로그인 → 대화가 자동 동기화</li>
+          <li>음성 모드·카메라 첨부·위젯 사용 가능</li>
+        </ul>
+
+        <h3>데스크톱 앱 (Mac / Windows) <span class="badge badge-new">권장</span></h3>
+        <ul>
+          <li><a href="https://claude.ai/download" target="_blank">claude.ai/download</a>에서 OS별 설치</li>
+          <li>전역 단축키(<code>Option+Space</code> / <code>Alt+Space</code>)로 어디서든 호출</li>
+          <li><strong>Cowork 기능은 데스크톱 앱 전용</strong> (Section 15 참조)</li>
+        </ul>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>같은 계정이면 웹·모바일·데스크톱 대화 기록과 Projects가 모두 동기화됩니다. 대화는 어디서 시작해도 다른 기기에서 이어 쓸 수 있습니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-02">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">플랜 선택 — 2026년 5월 기준</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="2">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <h3>개인용 플랜</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>플랜</th><th>가격</th><th>한도</th><th>핵심 차이</th></tr>
+            <tr><td>Free</td><td>$0</td><td>5시간 윈도우</td><td>Sonnet 4.6 위주, 기본 기능 + Memory 사용 가능</td></tr>
+            <tr><td><span class="badge badge-pro">Pro</span></td><td>$20/월 (연간 $17)</td><td>5h당 약 45 메시지</td><td>Opus 4.7, Projects 무제한, Cowork</td></tr>
+            <tr><td><span class="badge badge-max">Max 5×</span></td><td>$100/월</td><td>Pro 대비 5×</td><td>업무 메인 도구로 사용하기 적합</td></tr>
+            <tr><td><span class="badge badge-max">Max 20×</span></td><td>$200/월</td><td>Pro 대비 20×</td><td>헤비유저, 영상·문서 대량 처리</td></tr>
+          </table>
+        </div>
+
+        <h3>조직용 플랜</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>플랜</th><th>가격</th><th>최소 인원</th><th>특징</th></tr>
+            <tr><td>Team Standard</td><td>$25/seat (연간 $20)</td><td>5명</td><td>Projects 팀 공유, 중앙 청구</td></tr>
+            <tr><td>Team Premium</td><td>$125/seat (연간 $100)</td><td>5명</td><td>Max 5× 한도, Cowork 풀세트</td></tr>
+            <tr><td>Enterprise</td><td>$60+/seat (문의)</td><td>70명</td><td>1M 컨텍스트, SAML SSO, HIPAA, 도메인 캡처</td></tr>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>한도는 모델·메시지 길이·첨부에 따라 다르게 소모됩니다. Opus 4.7 한 번 호출은 Sonnet 4.6 4~5번에 해당합니다. 가벼운 질문은 Sonnet으로 돌리면 한도가 훨씬 오래갑니다.</p></div>
+        </div>
+
+        <h3>어떤 플랜으로 시작할까?</h3>
+        <ul>
+          <li><strong>처음 써본다</strong> → Free로 일주일 → 한도가 자주 막히면 Pro</li>
+          <li><strong>업무에 매일 쓴다</strong> → Pro 시작 → 부족하면 Max 5×</li>
+          <li><strong>팀 5명 이상</strong> → Team Standard부터, 공동 Projects가 필요하면 즉시</li>
+          <li><strong>대기업·금융·의료</strong> → Enterprise (SSO·감사로그·HIPAA)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="sec-03">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">인터페이스 둘러보기</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="3">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <h3>좌측 사이드바</h3>
+        <ul>
+          <li><strong>New chat</strong>: 새 대화 시작 (<code>Cmd/Ctrl + Shift + O</code>)</li>
+          <li><strong>Recents</strong>: 최근 대화 목록. 검색·고정·삭제 가능</li>
+          <li><strong>Projects</strong>: 컨텍스트 묶음 워크스페이스 (Section 08)</li>
+          <li><strong>Artifacts</strong>: 지금까지 만든 코드·문서·앱 모음</li>
+          <li><strong>Settings</strong>: 모델, Styles, Memory, Connectors, 계정</li>
+        </ul>
+
+        <h3>대화 화면</h3>
+        <ul>
+          <li><strong>입력창</strong>: 텍스트, 파일 드래그&드롭, 이미지 붙여넣기</li>
+          <li><strong>모델 선택</strong>: 우측 상단 드롭다운 (Opus / Sonnet / Haiku, Section 05)</li>
+          <li><strong>+ 버튼</strong>: 파일 첨부, 스크린샷, Connectors 호출</li>
+          <li><strong>Style 칩</strong>: 입력창 옆 (Section 10)</li>
+        </ul>
+
+        <h3>주요 단축키</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>키</th><th>동작</th></tr>
+            <tr><td><code>Enter</code></td><td>메시지 전송</td></tr>
+            <tr><td><code>Shift + Enter</code></td><td>줄바꿈</td></tr>
+            <tr><td><code>Esc</code></td><td>입력 취소 / 모달 닫기</td></tr>
+            <tr><td>파일 드래그 & 드롭</td><td>첨부</td></tr>
+            <tr><td><code>Shift +</code> 드래그</td><td>이미 채팅 중에 추가 첨부</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-04">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">첫 대화 — 좋은 프롬프트 작성법</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="4">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>같은 질문도 어떻게 묻느냐에 따라 결과가 천차만별입니다. 좋은 프롬프트의 4가지 요소를 봅니다.</p>
+
+        <h3>1. 역할 (Role)</h3>
+        <p>Claude가 어떤 입장에서 답해야 하는지 알려줍니다.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">나쁜 예</span><button class="code-copy">복사</button></div>
+          <pre>이 글 어때?</pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">좋은 예</span><button class="code-copy">복사</button></div>
+          <pre>너는 10년차 카피라이터야. 이 광고 헤드라인을 평가해줘.
+브랜드 톤: 친근하지만 신뢰감 있는, 30대 워킹맘 타겟.</pre>
+        </div>
+
+        <h3>2. 맥락 (Context)</h3>
+        <p>왜 이걸 하는지, 누가 볼 건지, 어떤 제약이 있는지.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">예시</span><button class="code-copy">복사</button></div>
+          <pre>다음 주 임원 보고용 슬라이드 초안이야.
+- 청중: 비기술직 임원 (AI 용어 모름)
+- 목적: 도입 승인 받기
+- 시간: 10분 발표, 슬라이드 7장
+- 톤: 비즈니스 임팩트 중심, 기술 디테일 최소화</pre>
+        </div>
+
+        <h3>3. 구체적 작업 (Task)</h3>
+        <p>"좋게 만들어줘"보다 "○○을 △△로 바꿔줘"가 훨씬 정확합니다.</p>
+
+        <h3>4. 출력 형식 (Format)</h3>
+        <ul>
+          <li>표·불릿·번호 매기기 중 어느 것</li>
+          <li>분량 (단어 수, 문장 수, 슬라이드 장수)</li>
+          <li>예시 1~2개 제공 (few-shot)</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>답이 마음에 안 들면 처음부터 다시 묻기보다 <strong>이어서 수정 요청</strong>하세요. "좀 더 짧게", "1번만 다시", "톤을 더 캐주얼하게" 같이. 모델이 이미 쌓은 컨텍스트를 활용합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-05">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">모델 선택 가이드 — Opus 4.7 / Sonnet 4.6 / Haiku 4.5</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="5">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>2026년 5월 기준 라인업입니다. 모델 선택은 우측 상단 드롭다운에서 언제든 바꿀 수 있습니다.</p>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>모델</th><th>특기</th><th>속도</th><th>API 단가 (입력/출력)</th><th>언제 쓰나</th></tr>
+            <tr><td><strong>Opus 4.7</strong></td><td>최고 성능. 코딩·복잡 추론·디자인 감각</td><td>보통</td><td>$5 / $25</td><td>중요한 글쓰기, 슬라이드 디자인, 복잡한 분석</td></tr>
+            <tr><td><strong>Sonnet 4.6</strong></td><td>균형형. 일상 업무 90%</td><td>빠름</td><td>$3 / $15</td><td>요약, 번역, 일반 글쓰기, 빠른 코딩</td></tr>
+            <tr><td><strong>Haiku 4.5</strong></td><td>경량·초고속</td><td>매우 빠름</td><td>$1 / $5</td><td>단순 질문, 분류, 빠른 응답이 필요한 일</td></tr>
+          </table>
+        </div>
+
+        <h3>실전 선택 기준</h3>
+        <ul>
+          <li><strong>Opus 4.7</strong>: 보고서 초안, 슬라이드 자동 생성, 코드 리팩터링, 전략적 의사결정 보조</li>
+          <li><strong>Sonnet 4.6</strong>: 이메일·블로그 작성, PDF 요약, 회의록 정리, 번역</li>
+          <li><strong>Haiku 4.5</strong>: 사실 확인, 짧은 답변, 모바일에서 빠른 메모</li>
+        </ul>
+
+        <h3>Extended Thinking (확장 사고)</h3>
+        <p>입력창 왼쪽 <strong>Search and tools</strong> 버튼 → <strong>Extended thinking</strong> 토글을 켜면 모델이 답하기 전 내부적으로 더 오래 추론합니다. 수학 문제, 코드 디버깅, 복잡한 의사결정에 효과적입니다.</p>
+        <ul>
+          <li>지원 모델: Claude 4 계열 (Opus 4.7, Sonnet 4.6)</li>
+          <li>켜면 답변 위에 <strong>"Thinking"</strong> 인디케이터 + 타이머 표시</li>
+          <li>펼치면 추론 과정 요약을 볼 수 있음</li>
+          <li>Opus 4.7은 Adaptive Thinking으로 자동 작동 (수동 토글 불필요한 경우도 있음)</li>
+        </ul>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>Extended thinking을 켜거나 끄면 새 대화로 분기됩니다. 한 대화 안에서 켰다 껐다 자유롭게 못 하니, 작업 시작 전에 결정하세요.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-06">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-title">파일 첨부 활용</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="6">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <h3>지원 파일 종류</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>유형</th><th>예시</th><th>활용</th></tr>
+            <tr><td>문서</td><td>PDF, DOCX, TXT, MD</td><td>요약, 비교, 질의응답, 번역</td></tr>
+            <tr><td>스프레드시트</td><td>XLSX, CSV</td><td>데이터 분석, 차트 생성, 인사이트 추출</td></tr>
+            <tr><td>이미지</td><td>PNG, JPG, WebP, GIF</td><td>설명, OCR, 디자인 피드백, 차트 해석</td></tr>
+            <tr><td>코드</td><td>모든 텍스트 기반 코드 파일</td><td>리뷰, 리팩터링, 버그 찾기</td></tr>
+            <tr><td>프레젠테이션</td><td>PPTX</td><td>슬라이드 재구성, 톤 변경</td></tr>
+          </table>
+        </div>
+
+        <h3>첨부 한도 (2026년 5월 기준)</h3>
+        <ul>
+          <li>한 메시지당 최대 <strong>20개 파일</strong></li>
+          <li>파일당 최대 <strong>30MB</strong></li>
+          <li>이미지는 자동으로 압축 후 분석</li>
+          <li>Project에 업로드하면 모든 대화에서 재사용 가능</li>
+        </ul>
+
+        <h3>실전 팁</h3>
+        <ul>
+          <li>긴 PDF는 첨부 후 "목차부터 보여줘"로 시작 → 관심 챕터만 깊게</li>
+          <li>이미지를 첨부하면서 <strong>"한국어로 설명해줘"</strong>를 명시 (Claude는 첨부 언어 따라가는 경향)</li>
+          <li>엑셀은 첫 행에 헤더 있는지 확인 후 첨부 → 분석 정확도가 다름</li>
+          <li>스크린샷은 <code>Cmd/Ctrl + V</code>로 바로 붙여넣기 가능</li>
+        </ul>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>민감한 개인정보(주민번호, 카드번호, 비밀번호)는 첨부 전 반드시 마스킹하세요. 기본 정책상 학습에 안 쓰이지만 사고는 항상 사용자 측에서 시작됩니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-07">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title">Artifacts 마스터하기</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 20분</span>
+          <button class="btn-complete" data-sec="7">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>Artifacts</strong>는 코드·문서·앱을 우측 패널에 실시간으로 렌더링해주는 기능입니다. 대화는 왼쪽, 결과물은 오른쪽에 살아 움직입니다.</p>
+
+        <h3>무엇을 만들 수 있나</h3>
+        <ul>
+          <li><strong>웹 앱·인터랙티브 도구</strong>: HTML/React 컴포넌트가 실제 작동</li>
+          <li><strong>문서 (.docx)</strong>: 목차·표·스타일이 들어간 워드 파일 다운로드</li>
+          <li><strong>슬라이드 (.pptx)</strong>: 차트·레이아웃 포함 파워포인트 다운로드</li>
+          <li><strong>SVG·다이어그램</strong>: 로고, 플로우차트, 인포그래픽</li>
+          <li><strong>인터랙티브 차트</strong> <span class="badge badge-new">2026 신기능</span>: 채팅 안에 인라인으로 차트 렌더링</li>
+          <li><strong>마크다운 문서</strong>: 블로그·뉴스레터 초안</li>
+        </ul>
+
+        <h3>예시 프롬프트</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">대화 예시</span><button class="code-copy">복사</button></div>
+          <pre>1) 첨부한 매출 엑셀 보고 월별 추이 차트를 Artifact로 만들어줘.
+2) 우리 회사 OKR 1Q 회고 슬라이드 7장을 .pptx로 만들어줘.
+   타이틀, 성과 3가지, 미달 2가지, 액션, 다음 분기 목표 순서로.
+3) 직원 만족도 설문지를 인터랙티브 HTML로 만들어줘.
+   5점 척도, 결과 즉시 차트로 보여주는 버전.</pre>
+        </div>
+
+        <h3>Artifact 다루기</h3>
+        <ul>
+          <li><strong>Fork</strong>: 현재 Artifact를 복제해 다른 방향으로 발전</li>
+          <li><strong>Rewind</strong>: 이전 버전으로 되돌리기 (실수했을 때)</li>
+          <li><strong>Publish</strong>: 링크로 공유 (Pro 이상)</li>
+          <li><strong>Download</strong>: 코드/파일을 로컬에 저장</li>
+          <li><strong>Add to Project</strong>: 다른 대화에서 재사용 가능하게 묶기</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>슬라이드를 만들 때 <strong>"디자인 톤: 미니멀·다크모드"</strong> 같이 디자인 가이드를 미리 주면 Opus 4.7이 디자인 감각을 살려 더 보기 좋은 결과를 만듭니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-08">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2 class="section-title">Projects — 컨텍스트 워크스페이스</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 20분</span>
+          <button class="btn-complete" data-sec="8">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>Projects</strong>는 관련 파일과 지시사항을 묶어두는 영구 워크스페이스입니다. 그 안에서 시작한 모든 대화는 같은 자료·톤·규칙을 자동으로 따라갑니다.</p>
+
+        <h3>만드는 법</h3>
+        <ol>
+          <li>좌측 사이드바 <strong>Projects</strong> → <strong>+ Create Project</strong></li>
+          <li>이름·설명·이모지 설정</li>
+          <li><strong>Project Knowledge</strong>에 PDF·문서·코드 업로드 (최대 ~200MB)</li>
+          <li><strong>Custom Instructions</strong>에 도메인·톤·규칙 작성</li>
+          <li>안에서 <strong>New chat</strong> → 모든 대화가 위 자료·규칙 자동 적용</li>
+        </ol>
+
+        <h3>Custom Instructions 예시</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">예시 — 마케팅 콘텐츠 프로젝트</span><button class="code-copy">복사</button></div>
+          <pre>역할: 너는 우리 회사 콘텐츠 마케터다.
+브랜드 톤: 친근하지만 전문적, 이모지 최소, 반말 금지.
+타겟: 30~40대 IT 종사자, 의사결정자.
+
+규칙:
+- 모든 글은 후크(1줄) → 본문 → CTA 구조
+- 경쟁사 직접 비교는 피한다
+- 출처 있는 통계만 인용
+- 슬랭·유행어는 분기당 1회 이내
+
+업로드된 PDF 3개는 우리 회사 톤·보이스·캠페인 사례다.
+새로 만드는 글은 이 스타일을 반드시 따른다.</pre>
+        </div>
+
+        <h3>활용 예</h3>
+        <ul>
+          <li><strong>회사 위키 Project</strong>: 사내 정책 PDF + "신입에게 설명하듯이 답해줘"</li>
+          <li><strong>책 집필 Project</strong>: 기존 챕터 + 캐릭터 설정 + "1인칭, 현재시제"</li>
+          <li><strong>리서치 Project</strong>: 논문 50편 + "출처 페이지번호 포함해서 답해줘"</li>
+          <li><strong>코드베이스 Project</strong>: 핵심 소스 + 아키텍처 문서 + "TypeScript strict 모드 기준"</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>Project Knowledge는 검색 기반(RAG)이라 모든 파일을 매번 다 읽지 않습니다. "○○ 문서 8페이지 표 기준으로"처럼 구체적으로 지목하면 정확도가 올라갑니다.</p></div>
+        </div>
+
+        <h3>팀 공유 <span class="badge badge-pro">Team</span></h3>
+        <p>Team·Enterprise 플랜은 Project를 팀원과 공유할 수 있습니다. 권한은 View / Comment / Edit 3단계. 신입 온보딩, 공통 SOP, 브랜드 가이드를 묶어두면 회사 차원의 AI 워크스페이스가 됩니다.</p>
+      </div>
+    </section>
+
+    <section class="section" id="sec-09">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2 class="section-title">Memory — 대화를 가로지르는 기억 <span class="badge badge-new">신기능</span></h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="9">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>Memory는 Claude가 <strong>대화 사이를 가로질러 사용자에 대한 사실을 기억</strong>하는 기능입니다. 매번 "나는 사이드 프로젝트로 ○○ 하고 있어"를 다시 말할 필요가 없어집니다.</p>
+
+        <h3>무엇을 기억하나</h3>
+        <ul>
+          <li>직업·역할·전문 분야</li>
+          <li>선호 톤·언어·답변 형식</li>
+          <li>진행 중인 프로젝트·목표</li>
+          <li>피드백 (예: "긴 설명 말고 결론부터")</li>
+        </ul>
+
+        <h3>저장 방법</h3>
+        <p>두 가지 방식이 있습니다.</p>
+        <ol>
+          <li><strong>자동 추출</strong>: Claude가 대화 중 중요한 사실을 자동 저장 (저장될 때 화면 우측에 알림)</li>
+          <li><strong>명시적 저장</strong>: "이거 기억해줘: 나는 한식 알레르기가 있어"</li>
+        </ol>
+
+        <h3>관리</h3>
+        <ul>
+          <li>Settings → <strong>Memory</strong>에서 저장된 사실 전체 목록 확인</li>
+          <li>개별 삭제 / 수정 / 전체 초기화 가능</li>
+          <li>특정 대화에서만 끄고 싶으면 입력창 메뉴 → <strong>"Don't use memory"</strong></li>
+        </ul>
+
+        <h3>Projects vs Memory 차이</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th></th><th>Projects</th><th>Memory</th></tr>
+            <tr><td>범위</td><td>해당 Project 안 모든 대화</td><td>모든 대화 (Project 밖 포함)</td></tr>
+            <tr><td>저장 대상</td><td>파일·문서·규칙</td><td>사용자 자신에 대한 사실</td></tr>
+            <tr><td>예시</td><td>회사 PDF, 코드베이스</td><td>"나는 비건이다", "이메일은 한국어로"</td></tr>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>Memory에 민감 정보(주소, 전화번호, 가족 신상)는 저장하지 마세요. 저장하면 모든 대화에서 참조 가능해지므로, 공유 대화·screenshot·Publish 시 누출 위험이 커집니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-10">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2 class="section-title">Output Styles — 글쓰기 톤 저장 <span class="badge badge-new">신기능</span></h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="10">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>Output Styles</strong>(또는 Claude Design)는 자주 쓰는 출력 톤·형식을 저장해 한 번 클릭으로 적용하는 기능입니다.</p>
+
+        <h3>기본 제공 Style</h3>
+        <ul>
+          <li><strong>Normal</strong>: 기본값</li>
+          <li><strong>Concise</strong>: 군더더기 없이 짧게</li>
+          <li><strong>Explanatory</strong>: 단계별로 친절히 설명</li>
+          <li><strong>Formal</strong>: 격식 있는 비즈니스 톤</li>
+        </ul>
+
+        <h3>커스텀 Style 만들기</h3>
+        <ol>
+          <li>Settings → <strong>Styles</strong> → <strong>+ Create Style</strong></li>
+          <li>이름·설명·사용 시점 작성</li>
+          <li><strong>System prompt</strong>: 톤·금지어·형식 규칙 명시</li>
+          <li>샘플 답변 1~2개로 학습 (선택)</li>
+          <li>저장 → 입력창 옆 칩으로 언제든 적용</li>
+        </ol>
+
+        <h3>예시 — "임원 보고용" Style</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">System prompt</span><button class="code-copy">복사</button></div>
+          <pre>모든 답변은 다음 구조로:
+1) 한 줄 결론 (의사결정 포인트)
+2) 근거 3가지 (각 1~2문장)
+3) 리스크 또는 다음 행동
+
+금지: 이모지, 인사말, "~인 것 같습니다" 같은 완충 표현.
+숫자는 반드시 출처와 함께. 모르면 "확인 필요"라고 표시.</pre>
+        </div>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>Styles는 Projects보다 가벼운 단위입니다. <strong>"이메일용 / 슬랙용 / 블로그용 / 임원보고용"</strong>처럼 출력 형식 위주로 만들어두고, 입력창에서 골라 쓰는 게 가장 실용적입니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-11">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2 class="section-title">음성 모드 & 모바일 앱</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="11">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>음성 모드는 2026년부터 <strong>모든 사용자에게 무료</strong>로 풀렸습니다. 모바일 앱·데스크톱 앱·웹 모두 지원.</p>
+
+        <h3>음성 종류 (5종)</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>이름</th><th>느낌</th><th>추천 용도</th></tr>
+            <tr><td>Buttery</td><td>부드럽고 따뜻함</td><td>일상 대화, 학습 보조</td></tr>
+            <tr><td>Airy</td><td>가볍고 명료함</td><td>빠른 정보 전달</td></tr>
+            <tr><td>Mellow</td><td>차분하고 깊이 있음</td><td>긴 글 읽어주기</td></tr>
+            <tr><td>Glassy</td><td>또렷하고 중립적</td><td>회의록, 인터뷰</td></tr>
+            <tr><td>Rounded</td><td>둥글고 친근함</td><td>아이·노약자 대상</td></tr>
+          </table>
+        </div>
+
+        <h3>사용 시나리오</h3>
+        <ul>
+          <li><strong>운전 중 메모</strong>: "오늘 미팅에서 나온 결정 3가지 정리해줘"</li>
+          <li><strong>산책 중 브레인스토밍</strong>: 주제 던지고 음성으로 핑퐁</li>
+          <li><strong>긴 PDF 듣기</strong>: 파일 첨부 후 "요약을 음성으로 읽어줘"</li>
+          <li><strong>외국어 회화 연습</strong>: "이제부터 영어로만 대화해줘"</li>
+        </ul>
+
+        <h3>모바일 앱 전용 기능</h3>
+        <ul>
+          <li><strong>카메라 첨부</strong>: 사진 찍어서 즉시 분석</li>
+          <li><strong>위젯</strong>: 홈 화면에서 음성 바로 시작</li>
+          <li><strong>공유 시트</strong>: 다른 앱에서 텍스트·이미지·링크를 Claude로 전송</li>
+          <li><strong>Siri / Google Assistant 연동</strong>: "Hey Siri, ask Claude..."</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>음성 도중 텍스트로 전환하고 싶으면 키보드 아이콘 탭. 같은 대화 안에서 음성↔텍스트가 자연스럽게 섞입니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-12">
+      <div class="section-header">
+        <span class="section-num">12</span>
+        <h2 class="section-title">웹 검색 & 인용</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="12">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>Claude는 필요할 때 자동으로 웹 검색을 사용해 최신 정보를 가져옵니다. Free 포함 전 플랜에서 사용 가능.</p>
+
+        <h3>자동 vs 수동</h3>
+        <ul>
+          <li><strong>자동</strong>: "오늘 환율", "최신 OpenAI 발표" 같이 시간 민감한 질문은 모델이 알아서 검색</li>
+          <li><strong>수동</strong>: 입력창 + 메뉴 → <strong>Web Search</strong> 토글로 강제 활성화</li>
+          <li><strong>비활성화</strong>: 토글 끄면 모델 내부 지식만 사용 (학습 컷오프 한계 있음)</li>
+        </ul>
+
+        <h3>인용 활용</h3>
+        <p>검색 기반 답변에는 출처가 자동으로 붙습니다. 클릭하면 원문으로 이동.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">활용 프롬프트</span><button class="code-copy">복사</button></div>
+          <pre>"2026년 상반기 한국 AI 스타트업 투자 동향을 조사해줘.
+- 출처는 최근 3개월 이내 자료만
+- 각 주장에 출처 링크 인라인으로
+- 한국어 자료 우선, 영어는 보조"</pre>
+        </div>
+
+        <h3>리서치용 팁</h3>
+        <ul>
+          <li><strong>"전문가 5명의 의견을 비교해줘"</strong> → 다양한 관점 검색</li>
+          <li><strong>"2024년 자료는 제외"</strong> → 최신성 강제</li>
+          <li><strong>"공식 발표·논문 우선, 블로그·트위터 제외"</strong> → 신뢰도 높임</li>
+        </ul>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>검색 결과도 환각이 0은 아닙니다. <strong>의사결정에 쓸 정보는 원문 링크를 직접 클릭해 확인</strong>하세요. 특히 수치·날짜·인용문은 반드시 검증.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-13">
+      <div class="section-header">
+        <span class="section-num">13</span>
+        <h2 class="section-title">입력창 핵심 기능 — @ + Search and tools, Style 칩</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="13">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>인터넷 글에 자주 보이는 <code>/btw</code> <code>/rewind</code> <code>/fork</code> <code>/recap</code>은 <strong>Claude Code CLI 전용 명령어</strong>입니다. Claude.ai 웹/앱 채팅에선 작동하지 않습니다. Claude.ai 입력창의 진짜 기능은 아래와 같습니다.</p></div>
+        </div>
+
+        <h3>@ 멘션 — 파일 빠르게 지목</h3>
+        <p>Project Knowledge에 올린 파일이 많을 때, 본문에 <code>@</code>를 입력하면 자동완성이 뜹니다. 원하는 파일을 골라 그 파일만 콕 집어 질문할 수 있습니다.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">예시</span><button class="code-copy">복사</button></div>
+          <pre>@budget_2026.xlsx 의 Q1 합계만 뽑아줘.
+@client_list.csv 와 비교해서 빠진 고객은 누구야?</pre>
+        </div>
+
+        <h3>+ 버튼 — 첨부 & Connectors</h3>
+        <p>입력창 왼쪽 <code>+</code> 버튼을 누르면:</p>
+        <ul>
+          <li><strong>Upload file</strong>: PDF·이미지·CSV 등 첨부 (Section 06)</li>
+          <li><strong>Add from Drive / Notion / GitHub 등</strong>: 연결된 Connectors에서 직접 가져오기 (Section 16)</li>
+          <li><strong>Take screenshot</strong> (데스크톱 앱): 화면 캡처 즉시 첨부</li>
+        </ul>
+
+        <h3>Search and tools — 응답 방식 조절</h3>
+        <p>입력창 왼쪽 <strong>Search and tools</strong> 메뉴 안 토글들:</p>
+        <ul>
+          <li><strong>Web search</strong>: 켜면 강제로 웹 검색 (Section 12)</li>
+          <li><strong>Extended thinking</strong>: 답하기 전 더 오래 추론 (Section 05)</li>
+          <li><strong>Drive / 기타 Connectors</strong>: 이 대화에서만 활성/비활성</li>
+        </ul>
+
+        <h3>Style 칩 — 톤 즉시 전환</h3>
+        <p>입력창 옆 작은 칩으로 현재 적용된 Style이 표시됩니다. 클릭하면 다른 Style로 전환 가능 (Section 10). Style을 바꿔도 같은 대화가 이어지지만, 다음 답변부터 톤이 달라집니다.</p>
+
+        <h3>드래그 & 드롭</h3>
+        <ul>
+          <li><strong>파일 드래그</strong>: 입력창에 끌어다 놓으면 첨부</li>
+          <li><strong>Shift + 드래그</strong>: 이미 첨부된 항목에 추가</li>
+          <li><strong>이미지 붙여넣기</strong>: <code>Cmd/Ctrl + V</code>로 스크린샷 즉시 삽입</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>모바일 앱은 입력창 아이콘이 약간 다릅니다. <code>+</code>는 사진/카메라/파일이 합쳐진 메뉴, 마이크 아이콘으로 음성 모드 바로 진입(Section 11). 데스크톱 앱은 추가로 <strong>전역 단축키</strong>(Option+Space / Alt+Space)로 어디서든 호출 가능.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-14">
+      <div class="section-header">
+        <span class="section-num">14</span>
+        <h2 class="section-title">트러블슈팅 & 자주 하는 실수</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="14">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="faq">
+          <div class="faq-item">
+            <div class="faq-q">"한도에 도달했습니다" 메시지가 떠요. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">5시간 롤링 윈도우 기준입니다. 우측 상단 시계 아이콘에서 리셋 시각을 확인하세요. 자주 막힌다면 <strong>Sonnet 4.6으로 모델을 내리고</strong> (Section 05), 그래도 부족하면 Pro → Max 5× 순으로 업그레이드. 한도 소모량이 큰 Opus 4.7·긴 첨부·Cowork 작업을 줄이는 것도 효과적.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">답변이 중간에 멈춰버려요. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">대부분 토큰 한도 초과입니다. <strong>"이어서 계속해줘"</strong>라고만 입력해도 모델이 끊긴 지점부터 다시 씁니다. 자주 발생한다면 출력 형식을 더 짧게 요청하거나, 한 번에 다 만들지 말고 단계로 쪼개세요.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">PDF를 첨부했는데 "읽지 못한다"고 합니다. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">스캔본 PDF(이미지 형태)는 OCR이 안 될 수 있습니다. <strong>"이미지로 인식해서 OCR로 읽어줘"</strong>를 명시하거나, 무료 OCR 도구로 텍스트 추출 후 다시 첨부하세요. 또 한 가지 — 30MB 초과면 자동 차단되니 분할 필요.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">같은 질문에 매번 다른 답을 줍니다. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">정상입니다. AI는 본질적으로 확률적입니다. 일관성이 중요하다면 <strong>Custom Instructions(Project) 또는 Style</strong>로 규칙을 못박으세요. "이 형식, 이 톤만 써"가 명시되면 변동성이 크게 줄어듭니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">한국어 답인데 갑자기 영어 단어가 섞입니다. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">기술 용어·고유명사는 영어가 자연스럽기 때문입니다. 전부 한국어를 원하면 "모든 용어를 한국어로 번역, 영어 병기 금지"를 명시. 반대로 기술 문서라면 영어 그대로 두는 게 정확도가 높습니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">생성된 .pptx / .docx 파일이 깨져요. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">한글 폰트 미설치 환경에서 자주 발생합니다. 다운로드 후 PowerPoint·Word에서 폰트 교체. 또는 프롬프트에 <strong>"폰트는 Malgun Gothic 사용"</strong>처럼 지정하세요.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">파일 첨부가 한도를 너무 많이 먹습니다. <span class="faq-arrow">▶</span></div>
+            <div class="faq-a">같은 파일을 반복 첨부하는 게 가장 흔한 원인입니다. <strong>Project Knowledge에 한 번 올려두면</strong> 다음 대화부터 다시 첨부하지 않아도 됩니다 (Section 08).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-15">
+      <div class="section-header">
+        <span class="section-num">15</span>
+        <h2 class="section-title">Claude Cowork — 데스크톱 에이전트 <span class="badge badge-new">2026 GA</span></h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 25분</span>
+          <button class="btn-complete" data-sec="15">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>Claude Cowork</strong>는 채팅창을 넘어 <strong>당신의 파일 시스템과 외부 서비스를 직접 다루는 데스크톱 에이전트</strong>입니다. Claude Code의 agentic 능력을 비개발 업무에 가져온 것. 2026년 1월 리서치 프리뷰, 4월 모든 유료 플랜에 GA.</p>
+
+        <h3>채팅과 뭐가 다른가</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th></th><th>Chat</th><th>Cowork</th></tr>
+            <tr><td>실행 위치</td><td>브라우저·앱 안</td><td>당신의 PC (파일 직접 접근)</td></tr>
+            <tr><td>지속성</td><td>한 번에 한 답변</td><td>여러 단계 작업을 자율 실행</td></tr>
+            <tr><td>도구</td><td>웹 검색, 첨부</td><td>파일시스템, 브라우저, 커넥터, 화면 제어</td></tr>
+            <tr><td>스케줄</td><td>불가</td><td>가능 (매일 아침 8시 등)</td></tr>
+          </table>
+        </div>
+
+        <h3>설치 & 시작</h3>
+        <ol>
+          <li>데스크톱 앱 (Mac/Windows) 설치 (Section 01)</li>
+          <li>앱 좌측 사이드바 <strong>Cowork</strong> 탭 선택</li>
+          <li>작업할 폴더 권한 부여 (예: <code>~/Documents/내회사</code>)</li>
+          <li>커넥터 연결 (Notion, Slack, Gmail, Drive 등)</li>
+          <li>작업 지시 → 결과만 받기</li>
+        </ol>
+
+        <h3>실전 시나리오</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">예시 1 — 매일 아침 보고서</span><button class="code-copy">복사</button></div>
+          <pre>매일 아침 8시:
+1. Gmail에서 어제 받은 이메일 중 답장 필요한 것 골라줘
+2. Slack #general 채널의 어제 결정사항 정리
+3. Notion의 "오늘 할 일" 페이지에 우선순위 매겨서 추가
+4. 결과를 ~/Documents/daily/{날짜}.md 로 저장
+5. 작업 끝나면 알림</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">예시 2 — 자동 갱신 대시보드</span><button class="code-copy">복사</button></div>
+          <pre>~/Documents/sales/sales.xlsx 와
+HubSpot CRM, Stripe 결제 데이터를 연결해서
+주간 매출 대시보드 HTML을 만들어줘.
+다음 주부터 매주 월요일 아침 8시에 자동 갱신.</pre>
+        </div>
+
+        <h3>안전장치</h3>
+        <ul>
+          <li>중요한 행동(파일 삭제, 메시지 전송, 결제) 전엔 항상 확인 요청</li>
+          <li>접근 가능한 폴더는 처음에 명시한 것만</li>
+          <li>활동 로그가 자동 기록 → 나중에 추적 가능</li>
+          <li>언제든 <strong>Stop</strong> 버튼으로 중단</li>
+        </ul>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>Cowork는 실제 파일을 수정합니다. 처음 쓸 땐 반드시 <strong>샌드박스 폴더</strong>(테스트용 빈 폴더)에서 연습하세요. 중요한 폴더를 통째로 권한 주면 사고 발생 시 복구가 어렵습니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-16">
+      <div class="section-header">
+        <span class="section-num">16</span>
+        <h2 class="section-title">MCP 커넥터 — 외부 서비스 연결</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 20분</span>
+          <button class="btn-complete" data-sec="16">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>MCP(Model Context Protocol)</strong>는 Claude가 외부 서비스에 직접 접근할 수 있게 해주는 개방형 표준입니다. 채팅·Cowork 모두에서 사용 가능.</p>
+
+        <h3>공식 커넥터 (Settings → Connectors)</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>서비스</th><th>가능한 작업</th></tr>
+            <tr><td>Gmail</td><td>이메일 읽기·요약·초안 작성·답장 전송</td></tr>
+            <tr><td>Google Drive</td><td>파일 검색·내용 읽기·새 문서 생성</td></tr>
+            <tr><td>Google Calendar</td><td>일정 확인·생성·재조정</td></tr>
+            <tr><td>Notion</td><td>페이지 검색·읽기·생성·업데이트</td></tr>
+            <tr><td>Slack</td><td>채널·메시지 검색·DM 전송</td></tr>
+            <tr><td>Linear / Jira</td><td>이슈 생성·상태 변경·검색</td></tr>
+            <tr><td>GitHub</td><td>이슈·PR·코드 검색·리뷰 코멘트</td></tr>
+            <tr><td>Stripe / HubSpot</td><td>매출·고객 데이터 조회</td></tr>
+          </table>
+        </div>
+
+        <h3>연결 방법</h3>
+        <ol>
+          <li>Settings → <strong>Connectors</strong> → 원하는 서비스 옆 <strong>Connect</strong></li>
+          <li>OAuth 인증 (해당 서비스 로그인 후 권한 허용)</li>
+          <li>입력창에서 <code>@</code> 입력 → 커넥터 선택 → 사용</li>
+        </ol>
+
+        <h3>실전 예</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">대화 예시</span><button class="code-copy">복사</button></div>
+          <pre>@Gmail 어제 받은 메일 중 "계약" 관련된 것만 정리해줘.
+@Notion 그 결과를 "거래 추적" 페이지 하단에 추가해줘.
+@Slack #sales 채널에 요약을 공유 메시지로 보내줘 (전송 전 확인).</pre>
+        </div>
+
+        <h3>커스텀 MCP 서버 <span class="badge badge-dev">개발자</span></h3>
+        <p>사내 도구나 자체 API를 연결하려면 MCP 서버를 직접 구현할 수 있습니다. <a href="https://modelcontextprotocol.io" target="_blank">modelcontextprotocol.io</a>에 표준 스펙·SDK 공개. Python/TypeScript로 100줄 미만이면 기본 서버 구성 가능.</p>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>커넥터 권한은 처음 인증할 때만 명확합니다. <strong>"메일 읽기"만 필요한데 "메일 전송"까지 허용하면 위험</strong>. 정기적으로 Settings에서 권한 점검하세요.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-17">
+      <div class="section-header">
+        <span class="section-num">17</span>
+        <h2 class="section-title">Computer Use & 원격 제어 <span class="badge badge-new">프리뷰</span></h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="17">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>Computer Use</strong>는 Claude가 화면을 보고 마우스·키보드를 조작해 일반 앱을 사용하는 기능입니다. API가 공식 커넥터를 지원하지 않는 서비스에 유용합니다. 2026년 3월 리서치 프리뷰로 공개.</p>
+
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>2026년 5월 현재 <strong>macOS 전용</strong>입니다. Windows·Linux 지원은 미정. Mac 사용자가 아니라면 이 섹션은 참고용으로만 보세요.</p></div>
+        </div>
+
+        <h3>두 가지 모드</h3>
+        <ul>
+          <li><strong>로컬 Cowork 내부</strong>: 데스크톱 앱에서 Cowork가 직접 화면·앱 제어</li>
+          <li><strong>원격 제어</strong>: <a href="https://claude.ai/code" target="_blank">claude.ai/code</a> 웹 또는 모바일 앱에서 PC에 있는 Claude Code 세션을 조종</li>
+        </ul>
+
+        <h3>원격 제어 시나리오</h3>
+        <p>출근길 지하철에서 노트북에 두고 온 작업을 모바일로 이어가는 게 가능합니다. <strong>데이터는 PC에 머무르고 채팅만 암호화된 채널로 전송</strong>됩니다.</p>
+        <ul>
+          <li>사무실 PC에서 <code>claude --remote</code> 실행</li>
+          <li>모바일 앱 → 해당 세션 선택 → 대화 이어가기</li>
+          <li>파일·환경변수·MCP 설정은 모두 PC 로컬에 유지</li>
+        </ul>
+
+        <h3>안전 가이드</h3>
+        <ul>
+          <li>로그인된 브라우저 세션은 모두 접근 가능 → 민감 탭은 사전에 로그아웃</li>
+          <li>결제·이메일 전송 등 되돌릴 수 없는 행동은 항상 확인 단계 거치게 설정</li>
+          <li>화면 녹화·캡처가 활동 로그에 남음 → 사후 검토 가능</li>
+        </ul>
+
+        <div class="callout danger">
+          <span class="callout-icon">🛑</span>
+          <div class="callout-body"><p>Computer Use는 강력한 만큼 위험합니다. 회사 PC, 공유 PC에서는 활성화하지 마세요. 개인 작업용 머신에서만, 그것도 처음엔 비파괴적 작업(브라우징·읽기)만으로 신뢰를 쌓은 뒤 점진적으로 권한을 확장하세요.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-18">
+      <div class="section-header">
+        <span class="section-num">18</span>
+        <h2 class="section-title">팀 협업 — Team 플랜 활용 <span class="badge badge-pro">Team</span></h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="18">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>5명 이상이 같이 쓴다면 Team 플랜이 비용·관리 모두 합리적입니다.</p>
+
+        <h3>Team 플랜의 핵심 차별점</h3>
+        <ul>
+          <li><strong>공동 Projects</strong>: 회사 위키, 브랜드 가이드, SOP를 한 곳에</li>
+          <li><strong>공동 Styles</strong>: 회사 톤 매뉴얼을 Style로 만들어 전사 공유</li>
+          <li><strong>중앙 청구</strong>: 개인 카드 정산 불필요</li>
+          <li><strong>관리자 대시보드</strong>: 사용량·활성 사용자·비용 추적</li>
+          <li><strong>데이터 정책</strong>: 학습 비활성화가 기본값</li>
+        </ul>
+
+        <h3>도입 단계 (권장)</h3>
+        <ol>
+          <li><strong>파일럿 (1~2주)</strong>: 3~5명 팀에 Team Standard 적용, 사용 사례 수집</li>
+          <li><strong>Projects 정리</strong>: 회사 문서·정책·브랜드 가이드를 Project Knowledge로 정리</li>
+          <li><strong>Style 표준화</strong>: 이메일·슬랙·블로그·보고서별 Style 만들고 전사 공유</li>
+          <li><strong>온보딩 문서</strong>: "신규 입사자용 Claude 사용 가이드" 작성 (CL101 참조 가능)</li>
+          <li><strong>월간 회고</strong>: 관리자 대시보드로 활용도 점검, 막힌 부서엔 케이스 스터디 공유</li>
+        </ol>
+
+        <h3>거버넌스 체크리스트</h3>
+        <ul>
+          <li>민감 데이터 분류 가이드 (어떤 정보는 채팅에 못 넣는지)</li>
+          <li>커넥터 권한 정책 (Gmail 전송 허용 여부 등)</li>
+          <li>Cowork 사용 범위 (개인 PC만? 회사 공유 폴더?)</li>
+          <li>외부 공유(Publish) 승인 절차</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><p>가장 자주 빠지는 함정: Team 플랜은 샀는데 <strong>Projects를 안 만들어서 결국 개인 채팅만 함</strong>. 도입 첫 주에 공동 Project 5개를 의무로 채워두면 활용도가 폭발합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-19">
+      <div class="section-header">
+        <span class="section-num">19</span>
+        <h2 class="section-title">실전 — 나만의 Claude 워크플로우 구축</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 40분</span>
+          <button class="btn-complete" data-sec="19">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>지금까지 배운 기능을 조합해, 직군별 "나만의 셋업"을 구축합니다. 본인 직군과 가장 가까운 케이스를 골라 그대로 따라 해보세요.</p>
+
+        <h3>케이스 A — 콘텐츠 마케터</h3>
+        <ol>
+          <li><strong>Project: "브랜드 콘텐츠"</strong>
+            <ul>
+              <li>Knowledge: 브랜드 가이드, 톤 매뉴얼, 과거 베스트 콘텐츠 10개</li>
+              <li>Instructions: 타겟·금지어·구조 명시</li>
+            </ul>
+          </li>
+          <li><strong>Styles 3개</strong>: "블로그용", "인스타용", "뉴스레터용"</li>
+          <li><strong>Memory</strong>: "나는 30대 워킹맘 타겟 브랜드 운영"</li>
+          <li><strong>Cowork 자동화</strong>: 매주 월요일 아침 → 지난주 콘텐츠 성과(GA, Instagram Insights) 가져와 회고 문서 작성</li>
+          <li><strong>실행 루틴</strong>: 새 글 아이디어 → Project 안에서 대화 → Style 적용 → Artifact로 초안 → 수정 → Slack에 공유</li>
+        </ol>
+
+        <h3>케이스 B — 프로덕트 매니저</h3>
+        <ol>
+          <li><strong>Project: "제품 X 운영"</strong>
+            <ul>
+              <li>Knowledge: PRD, 로드맵, 경쟁사 분석, 최근 3개월 사용자 피드백</li>
+              <li>Instructions: "근거는 항상 첨부 자료에서, 추측 금지"</li>
+            </ul>
+          </li>
+          <li><strong>Connectors</strong>: Linear (이슈), Slack (#product), Notion (회의록)</li>
+          <li><strong>Styles</strong>: "임원 보고용" (1줄 결론 + 근거 + 리스크)</li>
+          <li><strong>Cowork 자동화</strong>: 매일 아침 → 어제 들어온 이슈·피드백 우선순위 매겨 Notion에 추가</li>
+          <li><strong>실행 루틴</strong>: 주간 우선순위 회의 전 <code>/recap</code>으로 일주일 요약 → 미팅 중 음성 모드로 회의록 자동 정리</li>
+        </ol>
+
+        <h3>케이스 C — 1인 사업자·프리랜서</h3>
+        <ol>
+          <li><strong>Project: "내 사업"</strong>
+            <ul>
+              <li>Knowledge: 사업자등록증, 표준 계약서, 가격표, 포트폴리오</li>
+              <li>Instructions: "법률·세무 답변은 반드시 '전문가 확인 필요' 표시"</li>
+            </ul>
+          </li>
+          <li><strong>Connectors</strong>: Gmail (견적·계약 메일), Calendar, Drive (포트폴리오)</li>
+          <li><strong>Styles</strong>: "고객 응대 메일", "견적서 초안", "SNS 공지"</li>
+          <li><strong>Cowork 자동화</strong>: 매일 아침 → 어제 받은 견적 문의 분류, 답장 초안 생성 (전송은 직접 확인 후)</li>
+          <li><strong>모바일 활용</strong>: 외근 중 음성으로 견적 받아쓰기, 사진 첨부로 즉시 계약서 검토</li>
+        </ol>
+
+        <h3>공통 체크리스트 — 셋업 첫 1주일</h3>
+        <ul>
+          <li>[ ] 가장 자주 하는 업무 Top 3 정리</li>
+          <li>[ ] 각 업무마다 Project 하나씩 생성</li>
+          <li>[ ] Knowledge에 핵심 자료 5~10개 업로드</li>
+          <li>[ ] Custom Instructions에 톤·금지어·형식 작성</li>
+          <li>[ ] 자주 쓰는 Style 2~3개 등록</li>
+          <li>[ ] Memory에 "나는 누구, 무엇을, 어떻게 일하는지" 한 번 알려주기</li>
+          <li>[ ] Connectors 1~2개 연결 (Gmail부터 시작 추천)</li>
+          <li>[ ] Cowork 자동화는 2주차 이후 — 신뢰가 쌓인 뒤</li>
+        </ul>
+
+        <div class="callout success">
+          <span class="callout-icon">✅</span>
+          <div class="callout-body"><p>완벽한 셋업을 처음부터 만들려고 하지 마세요. <strong>가장 자주 하는 업무 하나만 먼저 Claude로 옮기고</strong>, 매주 하나씩 추가하는 게 가장 빠른 길입니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-20">
+      <div class="section-header">
+        <span class="section-num">20</span>
+        <h2 class="section-title">Privacy & Incognito — 데이터 통제권</h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 10분</span>
+          <button class="btn-complete" data-sec="20">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p>Claude.ai는 사용자에게 <strong>데이터 학습 허용 여부 선택권</strong>을 명시적으로 줍니다. 한 번 정해두면 끝이지만, 처음 한 번은 반드시 확인하세요.</p>
+
+        <h3>학습 거부 (Opt-out) 설정</h3>
+        <ol>
+          <li>우상단 프로필 아이콘 → <strong>Settings</strong></li>
+          <li><strong>Privacy</strong> 탭 (또는 <a href="https://claude.ai/settings/data-privacy-controls" target="_blank">claude.ai/settings/data-privacy-controls</a> 직접 접속)</li>
+          <li><strong>"Help improve Claude"</strong> 토글을 끔</li>
+          <li>설정 즉시 적용. 기존에 학습용으로 들어간 데이터는 회수되지 않지만, 이후 대화는 학습에 안 쓰임</li>
+        </ol>
+        <div class="callout warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><p>2025년 9월 약관 개정으로 Free·Pro·Max <strong>전 사용자가 한 번은 이 선택을 강제로 받게 됐습니다</strong>. 무심코 "Accept" 눌렀다면 켜져 있을 가능성이 높으니 지금 확인하세요. Team·Enterprise는 정책상 기본 비활성.</p></div>
+        </div>
+
+        <h3>Incognito 모드 — 일회용 대화</h3>
+        <p>중요한 주제(건강, 재무, 협상 전략)는 학습 토글과 무관하게 <strong>Incognito 모드</strong>로 시작하세요.</p>
+        <ul>
+          <li>새 대화 화면 우상단 <strong>👻 (유령 아이콘)</strong> 클릭 → Incognito 진입</li>
+          <li>이 대화는 <strong>학습에서 항상 제외</strong> (토글 켜져 있어도)</li>
+          <li>대화 기록 보존 기간이 훨씬 짧음</li>
+          <li>Recents에 안 뜸 (직접 북마크 안 하면 다시 못 찾음)</li>
+        </ul>
+
+        <h3>예외 — 항상 검토되는 케이스</h3>
+        <p>학습 거부했어도 <strong>안전 분류기가 위험 신호를 감지한 대화</strong>는 내부 신뢰·안전팀이 검토할 수 있습니다. 이는 정책 위반·악용 방지용으로, 정상 사용자에겐 사실상 무관합니다.</p>
+
+        <h3>대화 삭제 & 데이터 다운로드</h3>
+        <ul>
+          <li>개별 대화: Recents → 우클릭 → Delete</li>
+          <li>전체 데이터: Settings → Account → <strong>Export data</strong>로 JSON 받기</li>
+          <li>계정 삭제: 30일 유예 후 영구 삭제</li>
+        </ul>
+
+        <div class="callout danger">
+          <span class="callout-icon">🛑</span>
+          <div class="callout-body"><p>주민번호·카드번호·비밀번호·의료 차트는 학습 거부 여부와 무관하게 <strong>애초에 입력하지 말 것</strong>. 정책상 안전해도 사고는 사용자 측 화면 캡처·공유에서 일어납니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-21">
+      <div class="section-header">
+        <span class="section-num">21</span>
+        <h2 class="section-title">MCP Apps — 채팅창 안에서 작동하는 인터랙티브 앱 <span class="badge badge-new">2026/1 출시</span></h2>
+        <div class="section-meta">
+          <span class="section-time">⏱ 15분</span>
+          <button class="btn-complete" data-sec="21">완료 표시</button>
+        </div>
+      </div>
+      <div class="content">
+        <p><strong>MCP Apps</strong>는 2026년 1월 26일 출시된 새 표준입니다. 외부 앱이 단순 텍스트로 답하는 게 아니라 <strong>채팅창 안에 인터랙티브 UI(차트·폼·대시보드)를 직접 그려넣어</strong> 사용자가 그 안에서 바로 조작할 수 있게 합니다. Free·Pro·Max·Team·Enterprise 전 플랜에서 사용 가능.</p>
+
+        <h3>일반 Connector와 뭐가 다른가</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th></th><th>Connector (Section 16)</th><th>MCP App (Section 21)</th></tr>
+            <tr><td>출력 방식</td><td>텍스트로 결과 보고</td><td>채팅창 안 살아있는 UI</td></tr>
+            <tr><td>상호작용</td><td>모델에게 다시 부탁</td><td>UI 직접 클릭·드래그·편집</td></tr>
+            <tr><td>예시</td><td>"Slack에 메시지 보내줘"</td><td>Slack 메시지 미리보기가 채팅창에 떠서 직접 편집 후 전송</td></tr>
+          </table>
+        </div>
+
+        <h3>출시 시점 9개 파트너 앱</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>앱</th><th>채팅창에서 무엇을</th></tr>
+            <tr><td><strong>Slack</strong></td><td>메시지 초안 미리보기 + 직접 편집 후 전송</td></tr>
+            <tr><td><strong>Asana</strong></td><td>프로젝트 타임라인을 그려서 직접 조정</td></tr>
+            <tr><td><strong>Figma</strong></td><td>다이어그램 인라인 생성·수정</td></tr>
+            <tr><td><strong>Amplitude</strong></td><td>분석 차트를 채팅창에서 탐색</td></tr>
+            <tr><td><strong>Box</strong></td><td>파일 미리보기·이동·공유</td></tr>
+            <tr><td><strong>Canva</strong></td><td>프레젠테이션 디자인 인라인 편집</td></tr>
+            <tr><td><strong>Clay</strong></td><td>기업·인물 리서치 카드</td></tr>
+            <tr><td><strong>Hex</strong></td><td>데이터 시각화 위젯</td></tr>
+            <tr><td><strong>Monday.com</strong></td><td>보드 업데이트 폼</td></tr>
+          </table>
+        </div>
+
+        <h3>연결 방법</h3>
+        <ol>
+          <li><a href="https://claude.ai/directory" target="_blank">claude.ai/directory</a> 접속</li>
+          <li><strong>Featured</strong> 섹션에서 원하는 앱 → <strong>Connect</strong></li>
+          <li>OAuth 인증 → 사용 권한 허용</li>
+          <li>대화에서 자연어로 호출: <em>"Asana로 다음 분기 마케팅 캠페인 타임라인 만들어줘"</em></li>
+          <li>채팅창 안에 인터랙티브 UI가 뜸 → 직접 조작</li>
+        </ol>
+
+        <h3>실전 시나리오</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">예시 대화</span><button class="code-copy">복사</button></div>
+          <pre>나: 다음 주 신제품 출시 슬랙 공지 초안 만들어줘.
+   톤은 친근하지만 정보 빠짐없이.
+
+Claude: [Slack MCP App UI를 채팅창에 렌더링]
+   → 미리보기에서 채널 선택, 본문 직접 편집, 멘션 추가
+   → "Send" 버튼 누르면 즉시 발송 (취소 가능)</pre>
+        </div>
+
+        <h3>일반 Connector + MCP App 조합</h3>
+        <p>같은 서비스가 두 형태로 다 있을 수 있습니다. 데이터 조회는 Connector로 빠르게, 결과를 사용자가 조정해야 하는 작업은 MCP App으로 — 처럼 섞어 쓰면 가장 효율적.</p>
+
+        <div class="callout success">
+          <span class="callout-icon">✅</span>
+          <div class="callout-body"><p>CL101 완주를 축하합니다. 22개 섹션을 다 완료했다면, 이제 본인 업무에 맞는 Section 19의 케이스 셋업을 한 번 직접 만들어보세요. 그게 진짜 시작입니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" title="맨 위로">↑</button>
+
+<script>
+// ===== DATA =====
+const sections = [
+  { id: 0, num: '00', title: '시작 전 5가지 질문', time: '5분', group: 'basic' },
+  { id: 1, num: '01', title: '가입 & 첫 로그인', time: '5분', group: 'basic' },
+  { id: 2, num: '02', title: '플랜 선택', time: '10분', group: 'basic' },
+  { id: 3, num: '03', title: '인터페이스 둘러보기', time: '10분', group: 'basic' },
+  { id: 4, num: '04', title: '좋은 프롬프트 작성법', time: '15분', group: 'basic' },
+  { id: 5, num: '05', title: '모델 선택 가이드', time: '10분', group: 'basic' },
+  { id: 6, num: '06', title: '파일 첨부 활용', time: '10분', group: 'basic' },
+  { id: 7, num: '07', title: 'Artifacts 마스터하기', time: '20분', group: 'basic' },
+  { id: 8, num: '08', title: 'Projects — 컨텍스트 워크스페이스', time: '20분', group: 'basic' },
+  { id: 9, num: '09', title: 'Memory — 가로지르는 기억', time: '15분', group: 'basic' },
+  { id: 10, num: '10', title: 'Output Styles — 톤 저장', time: '10분', group: 'basic' },
+  { id: 11, num: '11', title: '음성 모드 & 모바일 앱', time: '15분', group: 'basic' },
+  { id: 12, num: '12', title: '웹 검색 & 인용', time: '10분', group: 'basic' },
+  { id: 13, num: '13', title: '입력창 핵심 기능', time: '10분', group: 'basic' },
+  { id: 14, num: '14', title: '트러블슈팅 & 실수', time: '15분', group: 'basic' },
+  { id: 15, num: '15', title: 'Claude Cowork', time: '25분', group: 'advanced' },
+  { id: 16, num: '16', title: 'MCP 커넥터', time: '20분', group: 'advanced' },
+  { id: 17, num: '17', title: 'Computer Use & 원격 제어', time: '15분', group: 'advanced' },
+  { id: 18, num: '18', title: '팀 협업 — Team 플랜', time: '15분', group: 'advanced' },
+  { id: 19, num: '19', title: '실전 — 나만의 워크플로우', time: '40분', group: 'advanced' },
+  { id: 20, num: '20', title: 'Privacy & Incognito', time: '10분', group: 'advanced' },
+  { id: 21, num: '21', title: 'MCP Apps — 채팅창 인터랙티브 앱', time: '15분', group: 'advanced' },
+];
+
+// ===== STATE =====
+let completed = JSON.parse(localStorage.getItem('cl101_done') || '[]');
+let theme = localStorage.getItem('cl101_theme') || 'light';
+
+// ===== INIT =====
+document.documentElement.setAttribute('data-theme', theme);
+updateThemeIcon();
+buildSidebar();
+updateProgress();
+
+// ===== BUILD SIDEBAR =====
+function buildSidebar() {
+  const basicList = document.getElementById('list-basic');
+  const advList = document.getElementById('list-advanced');
+  sections.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'nav-item' + (completed.includes(s.id) ? ' done' : '');
+    el.dataset.id = s.id;
+    el.innerHTML = `
+      <div class="nav-check" data-check="${s.id}">${completed.includes(s.id) ? '✓' : ''}</div>
+      <span class="nav-item-num">${s.num}</span>
+      <span class="nav-item-text">${s.title}</span>
+      <span class="nav-item-time">${s.time}</span>
+    `;
+    el.addEventListener('click', (e) => {
+      if (e.target.classList.contains('nav-check') || e.target.dataset.check) {
+        toggleDone(s.id);
+      } else {
+        scrollToSection(s.id);
+        closeSidebarMobile();
+      }
+    });
+    (s.group === 'basic' ? basicList : advList).appendChild(el);
+  });
+}
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const pct = Math.round((completed.length / sections.length) * 100);
+  document.getElementById('progress-text').textContent = pct + '%';
+  document.getElementById('progress-bar-top').style.width = pct + '%';
+  document.getElementById('progress-bar-side').style.width = pct + '%';
+  document.getElementById('sidebar-progress-count').textContent = `${completed.length} / ${sections.length} 완료`;
+
+  sections.forEach(s => {
+    const item = document.querySelector(`.nav-item[data-id="${s.id}"]`);
+    const check = document.querySelector(`.nav-check[data-check="${s.id}"]`);
+    const btn = document.querySelector(`.btn-complete[data-sec="${s.id}"]`);
+    if (item) item.classList.toggle('done', completed.includes(s.id));
+    if (check) check.textContent = completed.includes(s.id) ? '✓' : '';
+    if (btn) {
+      btn.textContent = completed.includes(s.id) ? '✅ 완료됨' : '완료 표시';
+      btn.classList.toggle('done', completed.includes(s.id));
+    }
+  });
+}
+
+function toggleDone(id) {
+  if (completed.includes(id)) {
+    completed = completed.filter(x => x !== id);
+  } else {
+    completed.push(id);
+  }
+  localStorage.setItem('cl101_done', JSON.stringify(completed));
+  updateProgress();
+}
+
+// ===== COMPLETE BUTTONS =====
+document.querySelectorAll('.btn-complete').forEach(btn => {
+  btn.addEventListener('click', () => toggleDone(parseInt(btn.dataset.sec)));
+});
+
+// ===== SCROLL & ACTIVE =====
+function scrollToSection(id) {
+  document.getElementById('sec-' + String(id).padStart(2, '0'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id.replace('sec-', '');
+      const numId = parseInt(id);
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[data-id="${numId}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: `-${62}px 0px -60% 0px` });
+
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+// ===== DARK MODE =====
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  theme = theme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('cl101_theme', theme);
+  updateThemeIcon();
+});
+function updateThemeIcon() {
+  document.getElementById('theme-toggle').textContent = theme === 'light' ? '🌙' : '☀️';
+}
+
+// ===== SIDEBAR TOGGLE (MOBILE) =====
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebar-overlay');
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+});
+overlay.addEventListener('click', closeSidebarMobile);
+function closeSidebarMobile() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+}
+
+// ===== NAV GROUP COLLAPSE =====
+document.querySelectorAll('.nav-group-header').forEach(h => {
+  h.addEventListener('click', () => {
+    h.closest('.nav-group').classList.toggle('collapsed');
+  });
+});
+
+// ===== FAQ ACCORDION =====
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    item.closest('.faq')?.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ===== CODE COPY =====
+document.querySelectorAll('.code-copy').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 2000);
+    });
+  });
+});
+
+// ===== SEARCH =====
+const searchInput = document.getElementById('search-input');
+let searchTimeout;
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(doSearch, 150);
+});
+
+// Cmd+K / Ctrl+K shortcut
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  }
+  if (e.key === 'Escape') {
+    searchInput.value = '';
+    doSearch();
+    searchInput.blur();
+  }
+});
+
+function doSearch() {
+  const q = searchInput.value.trim().toLowerCase();
+  const allSections = document.querySelectorAll('.section');
+  const navItems = document.querySelectorAll('.nav-item');
+  let visibleCount = 0;
+
+  // Remove old highlights
+  document.querySelectorAll('mark').forEach(m => {
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+
+  allSections.forEach(sec => {
+    if (!q) {
+      sec.classList.remove('hidden');
+      visibleCount++;
+      return;
+    }
+    const text = sec.textContent.toLowerCase();
+    if (text.includes(q)) {
+      sec.classList.remove('hidden');
+      visibleCount++;
+      highlightText(sec, q);
+    } else {
+      sec.classList.add('hidden');
+    }
+  });
+
+  // Filter nav items
+  navItems.forEach(item => {
+    if (!q) { item.style.display = ''; return; }
+    const title = item.querySelector('.nav-item-text')?.textContent.toLowerCase() || '';
+    item.style.display = title.includes(q) ? '' : 'none';
+  });
+
+  document.getElementById('no-results').style.display = (visibleCount === 0 && q) ? 'block' : 'none';
+}
+
+function highlightText(el, q) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+    acceptNode: n => {
+      if (['SCRIPT', 'STYLE', 'CODE', 'PRE'].includes(n.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
+      return n.textContent.toLowerCase().includes(q) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    const text = node.textContent;
+    const idx = text.toLowerCase().indexOf(q);
+    if (idx === -1) return;
+    const frag = document.createDocumentFragment();
+    frag.appendChild(document.createTextNode(text.slice(0, idx)));
+    const mark = document.createElement('mark');
+    mark.textContent = text.slice(idx, idx + q.length);
+    frag.appendChild(mark);
+    frag.appendChild(document.createTextNode(text.slice(idx + q.length)));
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+// ===== BACK TO TOP =====
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 300);
+});
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
